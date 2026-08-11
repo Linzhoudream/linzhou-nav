@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>蓝天的故事</title>
+<style>
+  :root{
+    --cream:#f4ecdc;
+    --paper:#fffdf8;
+    --ink:#4a3b2a;
+    --ink2:#6f5b40;
+    --tape:#e7d3b0;
+    --accent:#c98a5e;
+    --accent2:#b5562e;
+    --line:#e3d4ba;
+    --red:#d98b7a;
+    --yellow:#e9cf8a;
+    --green:#9bbf8a;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:"KaiTi","STKaiti","KaiTi_GB2312","Noto Serif SC",serif;
+    background:#e6dcc8;
+    color:var(--ink);
+    font-size:18px;
+    line-height:1.7;
+    display:flex;
+    justify-content:center;
+  }
+  .app{
+    width:100%;
+    max-width:520px;
+    min-height:100vh;
+    background:var(--cream);
+    position:relative;
+    box-shadow:0 0 40px rgba(0,0,0,.18);
+    overflow:hidden;
+  }
+  .hidden{display:none !important;}
+
+  /* ---------- 封面 ---------- */
+  #cover{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg,#aacbe8 0%,#cfe2f0 45%,#f4ecdc 100%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:24px;text-align:center;
+  }
+  .sun{position:absolute;top:46px;right:46px;width:74px;height:74px;border-radius:50%;
+    background:radial-gradient(circle,#fff6d8,#f4d98a);box-shadow:0 0 40px #ffe9a8;}
+  .cloud{position:absolute;background:#fff;opacity:.8;border-radius:40px;filter:blur(1px);}
+  .cloud.c1{top:90px;left:34px;width:96px;height:30px;}
+  .cloud.c2{top:150px;right:30px;width:74px;height:24px;}
+  .cover-photo{
+    width:200px;height:200px;background:#fff;padding:12px 12px 40px;
+    transform:rotate(-3deg);box-shadow:0 8px 24px rgba(0,0,0,.2);
+    border:1px solid #e6dcc6;
+  }
+  .cover-photo .img{
+    width:100%;height:100%;border-radius:4px;
+    background:
+      repeating-linear-gradient(45deg,#e9dcc2 0 12px,#e3d4b8 12px 24px);
+    display:flex;align-items:center;justify-content:center;color:var(--ink2);font-size:15px;
+  }
+  #cover h1{font-size:40px;margin:26px 0 6px;color:#3a2e1e;letter-spacing:4px;}
+  #cover .sub{color:var(--ink2);font-size:16px;margin-bottom:30px;}
+  .btn{
+    font-family:inherit;font-size:20px;color:#fff;background:var(--accent);
+    border:none;border-radius:30px;padding:14px 34px;cursor:pointer;
+    box-shadow:0 4px 0 #a9703f;transition:transform .1s;
+  }
+  .btn:active{transform:translateY(3px);box-shadow:0 1px 0 #a9703f;}
+  .btn.ghost{background:#fff;color:var(--accent2);border:2px solid var(--accent);box-shadow:none;}
+
+  /* ---------- 首页网格 ---------- */
+  #app{position:absolute;inset:0;display:flex;flex-direction:column;}
+  .topbar{
+    padding:18px 18px 12px;display:flex;align-items:center;gap:10px;
+    border-bottom:2px dashed var(--line);
+  }
+  .topbar .logo{font-size:24px;font-weight:bold;color:var(--accent2);letter-spacing:2px;}
+  .topbar .tip{font-size:13px;color:var(--ink2);margin-left:auto;}
+  .grid{
+    flex:1;overflow:auto;padding:18px;
+    display:grid;grid-template-columns:1fr 1fr;gap:14px;align-content:start;
+  }
+  .tile{
+    font-family:inherit;font-size:19px;color:var(--ink);text-align:left;
+    background:var(--paper);border:2px solid var(--line);border-radius:16px;
+    padding:16px 14px;cursor:pointer;position:relative;
+    box-shadow:0 3px 0 #e7dcc4;transition:transform .12s;
+    min-height:96px;display:flex;flex-direction:column;justify-content:space-between;
+  }
+  .tile:nth-child(odd){transform:rotate(-1deg);}
+  .tile:nth-child(even){transform:rotate(1deg);}
+  .tile:active{transform:scale(.97);}
+  .tile .ic{width:42px;height:42px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 2px 0 #a9703f;}
+  .tile .nm{font-weight:bold;}
+  .tile .ds{font-size:12px;color:var(--ink2);}
+  .tile.wide{grid-column:span 2;}
+
+  /* 胶带装饰 */
+  .tape{position:absolute;top:-10px;left:50%;transform:translateX(-50%) rotate(-3deg);
+    width:84px;height:22px;background:var(--tape);opacity:.85;}
+
+  /* ---------- 内页 ---------- */
+  .page{position:absolute;inset:0;background:var(--cream);display:flex;flex-direction:column;}
+  .page-head{
+    padding:16px 16px 10px;display:flex;align-items:center;gap:12px;
+    border-bottom:2px dashed var(--line);position:sticky;top:0;background:var(--cream);z-index:2;
+  }
+  .back{
+    font-family:inherit;font-size:16px;border:2px solid var(--accent);background:#fff;
+    color:var(--accent2);border-radius:20px;padding:6px 16px;cursor:pointer;
+  }
+  .page-head h2{font-size:23px;margin:0;color:var(--accent2);letter-spacing:2px;}
+  .page-body{flex:1;overflow:auto;padding:18px;}
+
+  /* 时间轴 */
+  .timeline{position:relative;padding-left:26px;}
+  .timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:3px;background:var(--accent);border-radius:3px;}
+  .tl-item{position:relative;margin-bottom:20px;}
+  .tl-item::before{content:"";position:absolute;left:-22px;top:6px;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--accent);}
+  .tl-year{font-weight:bold;color:var(--accent2);font-size:18px;}
+  .tl-card{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:6px;box-shadow:0 2px 0 #e7dcc4;}
+
+  /* 照片墙 */
+  .photos{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .polaroid{background:#fff;padding:10px 10px 30px;border:1px solid #e6dcc6;box-shadow:0 4px 12px rgba(0,0,0,.12);}
+  .polaroid:nth-child(odd){transform:rotate(-2deg);}
+  .polaroid:nth-child(even){transform:rotate(2deg);}
+  .polaroid .ph{height:130px;border-radius:4px;background:repeating-linear-gradient(45deg,#e9dcc2 0 12px,#e3d4b8 12px 24px);display:flex;align-items:center;justify-content:center;color:var(--ink2);font-size:14px;}
+  .polaroid .cap{text-align:center;font-size:14px;margin-top:8px;color:var(--ink);}
+
+  /* 手艺卡 */
+  .craft{background:var(--paper);border:2px solid var(--line);border-radius:16px;padding:16px;margin-bottom:16px;box-shadow:0 2px 0 #e7dcc4;}
+  .craft h3{margin:0 0 8px;color:var(--accent2);font-size:20px;}
+  .craft .tag{display:inline-block;background:var(--accent);color:#fff;border-radius:12px;font-size:13px;padding:2px 12px;margin-bottom:10px;}
+  .craft .mat{background:#fbf3e4;border-left:4px solid var(--accent);padding:8px 12px;border-radius:6px;font-size:15px;margin-bottom:10px;}
+  .craft ol{margin:0;padding-left:22px;}
+  .craft ol li{margin-bottom:4px;}
+
+  /* 家书 */
+  .letter{background:#fffaf0;border:1px solid #e6dcc6;border-radius:10px;padding:18px 20px;margin-bottom:16px;box-shadow:0 3px 10px rgba(0,0,0,.08);position:relative;}
+  .letter::before{content:"";position:absolute;top:10px;left:10px;width:60px;height:18px;background:var(--tape);opacity:.7;transform:rotate(-4deg);}
+  .letter h3{margin:6px 0 10px;color:var(--accent2);}
+  .letter p{margin:0 0 6px;}
+
+  /* 便签 */
+  .notes{display:flex;flex-direction:column;gap:16px;}
+  .note{padding:16px 18px;border-radius:6px;box-shadow:0 4px 10px rgba(0,0,0,.12);position:relative;font-size:17px;}
+  .note::before{content:"";position:absolute;top:-8px;left:50%;transform:translateX(-50%) rotate(-2deg);width:70px;height:18px;background:rgba(0,0,0,.08);}
+  .note.red{background:var(--red);color:#5a1f15;}
+  .note.yellow{background:var(--yellow);color:#5a4a12;}
+  .note.green{background:var(--green);color:#234a1c;}
+  .note .h{font-weight:bold;font-size:18px;margin-bottom:6px;display:block;}
+
+  /* 家谱树 */
+  .tree{display:flex;flex-direction:column;align-items:center;gap:0;padding:10px 0;}
+  .gen{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;}
+  .node{background:var(--paper);border:2px solid #d9b98f;border-radius:14px;padding:10px 16px;text-align:center;min-width:104px;box-shadow:0 2px 0 #e7dcc4;}
+  .node .nm{font-weight:bold;font-size:18px;color:var(--ink);}
+  .node .rl{font-size:12px;color:var(--ink2);}
+  .node.me{border-color:var(--accent);background:#fdeede;}
+  .conn{width:3px;height:26px;background:#d9b98f;}
+
+  /* 账本 */
+  .ledger{width:100%;border-collapse:collapse;background:var(--paper);border-radius:12px;overflow:hidden;box-shadow:0 2px 0 #e7dcc4;font-size:15px;}
+  .ledger th,.ledger td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;}
+  .ledger th{background:#f3e7d2;color:var(--ink2);}
+  .ledger .in{color:#2f7d32;font-weight:bold;}
+  .ledger .out{color:#b23b2e;font-weight:bold;}
+  .ledger tfoot td{font-weight:bold;background:#f3e7d2;}
+  .ledger-form{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;background:var(--paper);border:2px dashed var(--line);border-radius:14px;padding:14px;}
+  .ledger-form label{font-size:14px;color:var(--ink2);display:block;margin-bottom:4px;}
+  .ledger-form input,.ledger-form select{font-family:inherit;font-size:16px;width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;background:#fff;}
+  .ledger-form .full{grid-column:span 2;}
+  .ledger-form button{grid-column:span 2;font-family:inherit;font-size:18px;color:#fff;background:var(--accent);border:none;border-radius:24px;padding:12px;cursor:pointer;box-shadow:0 3px 0 #a9703f;}
+
+  .footnote{text-align:center;color:var(--ink2);font-size:13px;padding:18px;}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- 封面 -->
+  <section id="cover">
+    <div class="sun"></div>
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="cover-photo"><div class="img">老照片</div></div>
+    <h1>蓝天的故事</h1>
+    <div class="sub">咱家老太婆（蓝天）的一辈子念想</div>
+    <button class="btn" id="openBtn">翻开我家的故事 →</button>
+  </section>
+
+  <!-- 首页 -->
+  <section id="app" class="hidden">
+    <div class="topbar">
+      <span class="logo">蓝天的故事</span>
+      <span class="tip">点开看看 · 存在本机</span>
+    </div>
+    <div class="grid">
+      <button class="tile" data-target="p-dao"><span class="tape"></span><span class="ic">道</span><span class="nm">走过的道</span><span class="ds">按年份的大事</span></button>
+      <button class="tile" data-target="p-smile"><span class="tape"></span><span class="ic">笑</span><span class="nm">存下的笑脸</span><span class="ds">老照片儿·老影像</span></button>
+      <button class="tile" data-target="p-craft"><span class="tape"></span><span class="ic">艺</span><span class="nm">老手艺</span><span class="ds">绝活·拿手菜</span></button>
+      <button class="tile" data-target="p-words"><span class="tape"></span><span class="ic">信</span><span class="nm">想说的话</span><span class="ds">经验·家书·嘱咐</span></button>
+      <button class="tile" data-target="p-note"><span class="tape"></span><span class="ic">记</span><span class="nm">记事本</span><span class="ds">吃药·提醒·防骗</span></button>
+      <button class="tile" data-target="p-tree"><span class="tape"></span><span class="ic">树</span><span class="nm">咱家这棵大树</span><span class="ds">根儿和枝叶</span></button>
+      <button class="tile wide" data-target="p-ledger"><span class="tape"></span><span class="ic">账</span><span class="nm">账本</span><span class="ds">记账·月底算账</span></button>
+    </div>
+    <div class="footnote">内容可由家人帮忙添加，存在本机，不联网。</div>
+  </section>
+
+  <!-- 走过的道 -->
+  <section id="p-dao" class="page hidden">
+    <div class="page-head"><button class="back" data-back>← 回家</button><h2>走过的道</h2></div>
+    <div class="page-body">
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-year">1949年</div><div class="tl-card">生在白沟（保定高碑店）。那会儿穷，吃糠咽菜，可街坊邻里热乎，谁家揭不开锅，大伙儿匀一口。</div></div>
+        <div class="tl-item"><div class="tl-year">1968年</div><div class="tl-card">嫁给老伴栓柱。俩人一台缝纫机，起家。他说「有手就能活」，这话记一辈子。</div></div>
+        <div class="tl-item"><div class="tl-year">1982年</div><div class="tl-card">开始做布包。白沟箱包刚冒头，我踩着缝纫机赶活儿，一晚上能做三五个。</div></div>
+        <div class="tl-item"><div class="tl-year">1995年</div><div class="tl-card">供俩娃上了学。再苦不能苦孩子，咬牙供出来，建军上了技校，建梅念了高中。</div></div>
+        <div class="tl-item"><div class="tl-year">2010年</div><div class="tl-card">抱上大孙子浩浩。天伦之乐，比啥都强。</div></div>
+        <div class="tl-item"><div class="tl-year">2023年</div><div class="tl-card">学会用手机看孙子视频。现在能跟外地的娃们视频啦，夜里不孤单。</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 存下的笑脸 -->
+  <section id="p-smile" class="page hidden">
+    <div class="page-head"><button class="back" data-back>← 回家</button><h2>存下的笑脸</h2></div>
+    <div class="page-body">
+      <div class="photos">
+        <div class="polaroid"><div class="ph">老照片</div><div class="cap">全家福</div></div>
+        <div class="polaroid"><div class="ph">老照片</div><div class="cap">抱孙子</div></div>
+        <div class="polaroid"><div class="ph">老照片</div><div class="cap">老姐妹逛庙会</div></div>
+        <div class="polaroid"><div class="ph">老照片</div><div class="cap">做包的老伙计</div></div>
+        <div class="polaroid"><div class="ph">老照片</div><div class="cap">院子里的枣树</div></div>
+        <div class="polaroid"><div class="ph">老照片</div><div class="cap">金婚照</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 老手艺 -->
+  <section id="p-craft" class="page hidden">
+    <div class="page-head"><button class="back" data-back>← 回家</button><h2>老手艺</h2></div>
+    <div class="page-body">
+      <div class="craft">
+        <h3>绝活：手工布包</h3>
+        <span class="tag">做了四十年</span>
+        <div class="mat">材料：碎布、拉链、棉线、硬衬</div>
+        <ol>
+          <li>按纸样裁布，留缝份</li>
+          <li>里外缝合，翻正熨平</li>
+          <li>上拉链，压一道明线</li>
+          <li>装提手，最后整烫</li>
+        </ol>
+        <p style="margin-top:8px;color:var(--ink2);">「闭着眼都会，针脚比机器还齐整。」</p>
+      </div>
+      <div class="craft">
+        <h3>拿手菜：炸酱面</h3>
+        <span class="tag">娃们回老家头顿准要</span>
+        <div class="mat">材料：手擀面、黄酱、五花肉丁、黄瓜丝、心里美萝卜</div>
+        <ol>
+          <li>肉丁煸出油，下黄酱小火咕嘟</li>
+          <li>另起一锅煮手擀面，过凉水</li>
+          <li>面上铺黄瓜丝、萝卜丝，浇一勺酱</li>
+          <li>趁热拌开，香得嘞</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 想说的话 -->
+  <section id="p-words" class="page hidden">
+    <div class="page-head"><button class="back" data-back>← 回家</button><h2>想说的话</h2></div>
+    <div class="page-body">
+      <div class="letter">
+        <h3>给娃们的话</h3>
+        <p>钱是挣不完的，身子骨要紧。常回来，比寄钱强。</p>
+        <p>你们过得好，我就踏实。</p>
+      </div>
+      <div class="letter">
+        <h3>老理儿</h3>
+        <p>做人实诚，买卖不欺客。咱白沟人靠的就是信义，丢掉信义，摊子就散了。</p>
+      </div>
+      <div class="letter">
+        <h3>嘱咐</h3>
+        <p>我走以后，你们兄妹和睦，别为家产红脸。家和万事兴，记着。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 记事本 -->
+  <section id="p-note" class="page hidden">
+    <div class="page-head"><button class="back" data-back>← 回家</button><h2>记事本</h2></div>
+    <div class="page-body">
+      <div class="notes">
+        <div class="note red"><span class="h">吃药</span>降压药，早起一片、晌午一片，甭落了。喝水送服。</div>
+        <div class="note yellow"><span class="h">今儿个小提醒</span>赶集买豆腐；下午三点取快递；闺女四点视频。</div>
+        <div class="note green"><span class="h">防骗 · 留个心眼儿</span>陌生电话说中奖、免费体检、低价旅游，一律不听；要钱先跟娃通个气。保健品别瞎买。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 咱家这棵大树 -->
+  <section id="p-tree" class="page hidden">
+    <div class="page-head"><button class="back" data-back>← 回家</button><h2>咱家这棵大树</h2></div>
+    <div class="page-body">
+      <div class="tree">
+        <div class="gen">
+          <div class="node me"><div class="nm">蓝天</div><div class="rl">本人 · 老太婆</div></div>
+          <div class="node"><div class="nm">栓柱</div><div class="rl">老伴</div></div>
+        </div>
+        <div class="conn"></div>
+        <div class="gen">
+          <div class="node"><div class="nm">建军</div><div class="rl">大儿子</div></div>
+          <div class="node"><div class="nm">建梅</div><div class="rl">二闺女</div></div>
+        </div>
+        <div class="conn"></div>
+        <div class="gen">
+          <div class="node"><div class="nm">浩浩</div><div class="rl">孙子</div></div>
+          <div class="node"><div class="nm">妞妞</div><div class="rl">孙女</div></div>
+        </div>
+      </div>
+      <p class="footnote">点开每个人，以后能看他的小传和故事。</p>
+    </div>
+  </section>
+
+  <!-- 账本 -->
+  <section id="p-ledger" class="page hidden">
+    <div class="page-head"><button class="back" data-back>← 回家</button><h2>账本</h2></div>
+    <div class="page-body">
+      <table class="ledger">
+        <thead><tr><th>日期</th><th>名目</th><th>收/支</th><th>金额</th></tr></thead>
+        <tbody id="ledgerBody">
+          <tr><td>2026-07-01</td><td>做包手工活儿</td><td class="in">收</td><td>1200</td></tr>
+          <tr><td>2026-07-03</td><td>买菜</td><td class="out">支</td><td>45</td></tr>
+          <tr><td>2026-07-10</td><td>做包手工活儿</td><td class="in">收</td><td>800</td></tr>
+          <tr><td>2026-07-15</td><td>药</td><td class="out">支</td><td>60</td></tr>
+        </tbody>
+        <tfoot><tr><td colspan="3">本月合计</td><td id="ledgerTotal">1895</td></tr></tfoot>
+      </table>
+      <form id="ledgerForm" class="ledger-form">
+        <div><label>日期</label><input type="date" id="lDate" /></div>
+        <div><label>名目</label><input type="text" id="lName" placeholder="如：做包" /></div>
+        <div><label>收/支</label>
+          <select id="lType"><option value="in">收</option><option value="out">支</option></select>
+        </div>
+        <div><label>金额</label><input type="number" id="lAmt" inputmode="decimal" placeholder="0" /></div>
+        <button type="submit">记一笔</button>
+      </form>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  function show(id){
+    document.getElementById('cover').classList.add('hidden');
+    document.getElementById('app').classList.add('hidden');
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.add('hidden'); });
+    var el = document.getElementById(id);
+    if(el) el.classList.remove('hidden');
+    window.scrollTo(0,0);
+  }
+  function backHome(){
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.add('hidden'); });
+    document.getElementById('cover').classList.add('hidden');
+    document.getElementById('app').classList.remove('hidden');
+    window.scrollTo(0,0);
+  }
+  document.getElementById('openBtn').addEventListener('click', function(){ show('app'); });
+  document.querySelectorAll('.tile').forEach(function(t){
+    t.addEventListener('click', function(){ show(t.getAttribute('data-target')); });
+  });
+  document.querySelectorAll('[data-back]').forEach(function(b){
+    b.addEventListener('click', backHome);
+  });
+
+  // 账本：记一笔 + 合计
+  var body = document.getElementById('ledgerBody');
+  var totalEl = document.getElementById('ledgerTotal');
+  function recompute(){
+    var sum = 0;
+    body.querySelectorAll('tr').forEach(function(tr){
+      var sign = tr.querySelector('.in') ? 1 : -1;
+      var a = parseFloat(tr.lastElementChild.textContent) || 0;
+      sum += sign * a;
+    });
+    totalEl.textContent = sum;
+  }
+  document.getElementById('ledgerForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var d = document.getElementById('lDate').value || new Date().toISOString().slice(0,10);
+    var n = document.getElementById('lName').value || '一笔';
+    var type = document.getElementById('lType').value;
+    var a = parseFloat(document.getElementById('lAmt').value) || 0;
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td>'+d+'</td><td>'+n+'</td><td class="'+(type==='in'?'in':'out')+'">'+(type==='in'?'收':'支')+'</td><td>'+a+'</td>';
+    body.appendChild(tr);
+    recompute();
+    e.target.reset();
+  });
+</script>
+</body>
+</html>
