@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>家庭记忆册 · 模板示范</title>
+<style>
+  /* ===== 主题变量 ===== */
+  :root{
+    --cream:#f4ecdc;
+    --paper:#fffdf8;
+    --ink:#4a3b2a;
+    --ink2:#6f5b40;
+    --tape:#e7d3b0;
+    --accent:#c98a5e;
+    --accent2:#b5562e;
+    --line:#e3d4ba;
+    --red:#d98b7a;
+    --yellow:#e9cf8a;
+    --green:#9bbf8a;
+    --bg:#e6dcc8;
+    --card-bg:#fffdf8;
+    --card-border:#e6dcc6;
+    --timeline-dot:#c98a5e;
+    --timeline-line:#e3d4ba;
+    --menu-bg:rgba(255,253,248,0.96);
+    --menu-border:#e3d4ba;
+    --shadow:rgba(0,0,0,.12);
+    --photo-bg:#fff;
+    --photo-shadow:rgba(0,0,0,.18);
+    --nav-bg:rgba(244,236,220,0.95);
+    --nav-border:#e3d4ba;
+    --btn-bg:#c98a5e;
+    --btn-shadow:#a9703f;
+    --guide-bg:#faf6ee;
+    --guide-border:#e8dfc8;
+    --tag-bg:#e7d3b0;
+    --tag-color:#4a3b2a;
+    --year-bg:#c98a5e;
+    --year-color:#fff;
+    --photo-tape:#e7d3b0;
+    --ledger-bg:#fffdf8;
+    --ledger-line:#e3d4ba;
+  }
+
+  /* 喜庆红主题 */
+  [data-theme="red"]{
+    --cream:#fdf0f0;
+    --paper:#fff8f8;
+    --ink:#5a2a2a;
+    --ink2:#8f4a4a;
+    --tape:#f0c8c8;
+    --accent:#c94a4a;
+    --accent2:#a03030;
+    --line:#e8c8c8;
+    --red:#e07070;
+    --yellow:#f0c878;
+    --green:#8abf8a;
+    --bg:#e8d0d0;
+    --card-bg:#fff8f8;
+    --card-border:#e8c8c8;
+    --timeline-dot:#c94a4a;
+    --timeline-line:#e8c8c8;
+    --menu-bg:rgba(255,248,248,0.96);
+    --menu-border:#e8c8c8;
+    --shadow:rgba(80,0,0,.10);
+    --photo-bg:#fff;
+    --photo-shadow:rgba(80,0,0,.15);
+    --nav-bg:rgba(253,240,240,0.95);
+    --nav-border:#e8c8c8;
+    --btn-bg:#c94a4a;
+    --btn-shadow:#a03030;
+    --guide-bg:#fef0f0;
+    --guide-border:#f0c8c8;
+    --tag-bg:#f0c8c8;
+    --tag-color:#5a2a2a;
+    --year-bg:#c94a4a;
+    --year-color:#fff;
+    --photo-tape:#f0c8c8;
+    --ledger-bg:#fff8f8;
+    --ledger-line:#e8c8c8;
+  }
+
+  /* 清新蓝主题 */
+  [data-theme="blue"]{
+    --cream:#e8f0f8;
+    --paper:#f8fbff;
+    --ink:#2a3b5a;
+    --ink2:#4a5b7f;
+    --tape:#c8d8e8;
+    --accent:#5a8ac9;
+    --accent2:#3a6a9f;
+    --line:#c8d8e8;
+    --red:#d98b7a;
+    --yellow:#e9cf8a;
+    --green:#7abf9a;
+    --bg:#d0dce8;
+    --card-bg:#f8fbff;
+    --card-border:#c8d8e8;
+    --timeline-dot:#5a8ac9;
+    --timeline-line:#c8d8e8;
+    --menu-bg:rgba(248,251,255,0.96);
+    --menu-border:#c8d8e8;
+    --shadow:rgba(0,20,60,.10);
+    --photo-bg:#fff;
+    --photo-shadow:rgba(0,20,60,.12);
+    --nav-bg:rgba(232,240,248,0.95);
+    --nav-border:#c8d8e8;
+    --btn-bg:#5a8ac9;
+    --btn-shadow:#3a6a9f;
+    --guide-bg:#eef4fb;
+    --guide-border:#c8d8e8;
+    --tag-bg:#c8d8e8;
+    --tag-color:#2a3b5a;
+    --year-bg:#5a8ac9;
+    --year-color:#fff;
+    --photo-tape:#c8d8e8;
+    --ledger-bg:#f8fbff;
+    --ledger-line:#c8d8e8;
+  }
+
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+  html,body{font-family:"KaiTi","STKaiti","KaiTi_GB2312","Noto Serif SC",serif;background:var(--bg);color:var(--ink);font-size:18px;line-height:1.7;scroll-behavior:smooth;transition:background .4s ease}
+
+  /* ===== 顶部导航 ===== */
+  .top-nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:var(--nav-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--nav-border);transition:background .4s,border-color .4s}
+  .top-nav .brand{font-size:20px;font-weight:bold;color:var(--ink);letter-spacing:2px}
+  .top-nav .nav-actions{display:flex;gap:10px;align-items:center}
+  .theme-switcher{display:flex;gap:6px;background:rgba(0,0,0,.06);padding:4px;border-radius:20px}
+  .theme-btn{border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;position:relative;transition:transform .2s}
+  .theme-btn:hover{transform:scale(1.15)}
+  .theme-btn.active{box-shadow:0 0 0 3px var(--accent)}
+  .theme-btn[data-theme="default"]{background:#f4ecdc}
+  .theme-btn[data-theme="red"]{background:#fdf0f0;border:1px solid #c94a4a}
+  .theme-btn[data-theme="blue"]{background:#e8f0f8;border:1px solid #5a8ac9}
+  .menu-btn{border:none;background:var(--accent);color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:18px;box-shadow:0 2px 0 var(--btn-shadow);transition:transform .1s}
+  .menu-btn:active{transform:translateY(2px)}
+
+  /* ===== 菜单面板 ===== */
+  .menu-panel{position:fixed;top:60px;right:20px;z-index:999;background:var(--menu-bg);border:1px solid var(--menu-border);border-radius:16px;padding:16px;width:240px;box-shadow:0 8px 32px var(--shadow);opacity:0;pointer-events:none;transform:translateY(-10px);transition:opacity .3s,transform .3s}
+  .menu-panel.open{opacity:1;pointer-events:auto;transform:translateY(0)}
+  .menu-panel h3{font-size:16px;margin-bottom:12px;color:var(--ink);border-bottom:2px solid var(--accent);padding-bottom:6px}
+  .menu-panel a{display:block;padding:10px 12px;border-radius:8px;color:var(--ink2);text-decoration:none;font-size:16px;transition:background .2s}
+  .menu-panel a:hover{background:var(--tape)}
+  .menu-panel a::before{content:"◆";margin-right:8px;color:var(--accent);font-size:12px}
+
+  /* ===== 内容区 ===== */
+  .app{max-width:720px;margin:0 auto;background:var(--cream);min-height:100vh;position:relative;box-shadow:0 0 40px var(--shadow);transition:background .4s}
+
+  /* ===== 封面 ===== */
+  #cover{padding:80px 24px 40px;text-align:center;background:linear-gradient(180deg,rgba(170,203,232,.4) 0%,rgba(207,226,240,.3) 45%,var(--cream) 100%);position:relative;overflow:hidden;transition:background .4s}
+  .sun{position:absolute;top:60px;right:60px;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,#fff6d8,#f4d98a);box-shadow:0 0 40px #ffe9a8;opacity:.7}
+  .cloud{position:absolute;background:#fff;opacity:.7;border-radius:40px;filter:blur(1px)}
+  .cloud.c1{top:100px;left:40px;width:100px;height:32px}
+  .cloud.c2{top:160px;right:40px;width:80px;height:26px}
+  .cover-photo{width:220px;height:220px;background:var(--photo-bg);padding:12px 12px 44px;margin:0 auto;transform:rotate(-3deg);box-shadow:0 8px 24px var(--photo-shadow);border:1px solid var(--card-border);transition:box-shadow .4s}
+  .cover-photo img{width:100%;height:100%;object-fit:cover;border-radius:4px;display:block}
+  .cover-photo .placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--ink2);font-size:14px;background:repeating-linear-gradient(45deg,#e9dcc2 0 12px,#e3d4b8 12px 24px)}
+  #cover h1{font-size:42px;margin:24px 0 8px;color:var(--ink);letter-spacing:4px}
+  #cover .sub{color:var(--ink2);font-size:18px;margin-bottom:8px}
+  #cover .tagline{font-size:16px;color:var(--ink2);opacity:.8;margin-bottom:24px;font-style:italic}
+
+  /* ===== 通用section ===== */
+  section{padding:40px 24px;border-bottom:1px dashed var(--line);transition:border-color .4s}
+  section:last-of-type{border-bottom:none}
+  .sec-title{font-size:28px;text-align:center;margin-bottom:32px;position:relative;padding-bottom:16px}
+  .sec-title::after{content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:80px;height:3px;background:var(--accent);border-radius:2px;transition:background .4s}
+  .sec-sub{text-align:center;color:var(--ink2);font-size:16px;margin-bottom:24px;margin-top:-20px;opacity:.7}
+
+  /* ===== 时间轴 ===== */
+  .timeline{position:relative;padding-left:32px}
+  .timeline::before{content:"";position:absolute;left:8px;top:0;bottom:0;width:3px;background:var(--timeline-line);border-radius:2px;transition:background .4s}
+  .tl-item{position:relative;margin-bottom:24px;opacity:0;transform:translateY(30px);transition:opacity .6s,transform .6s}
+  .tl-item.show{opacity:1;transform:translateY(0)}
+  .tl-item::before{content:"";position:absolute;left:-28px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--timeline-dot);border:3px solid var(--cream);box-shadow:0 0 0 2px var(--timeline-dot);transition:background .4s,box-shadow .4s}
+  .tl-year{display:inline-block;background:var(--year-bg);color:var(--year-color);padding:4px 14px;border-radius:20px;font-size:15px;font-weight:bold;margin-bottom:8px;transition:background .4s}
+  .tl-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:16px;box-shadow:0 2px 8px var(--shadow);transition:background .4s,border-color .4s,box-shadow .4s}
+  .tl-card p{color:var(--ink2);font-size:16px}
+
+  /* ===== 照片墙 ===== */
+  .photo-wall{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .photo-item{position:relative;opacity:0;transform:scale(.9) translateY(20px);transition:opacity .6s,transform .6s}
+  .photo-item.show{opacity:1;transform:scale(1) translateY(0)}
+  .photo-item:nth-child(1){transform:rotate(-2deg)}
+  .photo-item:nth-child(2){transform:rotate(1deg)}
+  .photo-item:nth-child(3){transform:rotate(-1deg)}
+  .photo-item:nth-child(4){transform:rotate(2deg)}
+  .photo-item:nth-child(5){transform:rotate(-1.5deg)}
+  .photo-item:nth-child(6){transform:rotate(1.5deg)}
+  .photo-item.show:nth-child(1){transform:rotate(-2deg)}
+  .photo-item.show:nth-child(2){transform:rotate(1deg)}
+  .photo-item.show:nth-child(3){transform:rotate(-1deg)}
+  .photo-item.show:nth-child(4){transform:rotate(2deg)}
+  .photo-item.show:nth-child(5){transform:rotate(-1.5deg)}
+  .photo-item.show:nth-child(6){transform:rotate(1.5deg)}
+  .photo-polaroid{background:var(--photo-bg);padding:8px 8px 32px;box-shadow:0 4px 12px var(--photo-shadow);border:1px solid var(--card-border);border-radius:4px;transition:background .4s,box-shadow .4s}
+  .photo-polaroid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:2px;display:block;background:var(--tape)}
+  .photo-caption{text-align:center;margin-top:6px;font-size:14px;color:var(--ink2);position:absolute;bottom:8px;left:0;right:0}
+  .photo-placeholder{width:100%;aspect-ratio:1;background:repeating-linear-gradient(45deg,var(--tape) 0 12px,var(--line) 12px 24px);border-radius:2px;display:flex;align-items:center;justify-content:center;color:var(--ink2);font-size:13px}
+
+  /* ===== 手艺 ===== */
+  .craft-grid{display:grid;grid-template-columns:1fr;gap:20px}
+  .craft-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:24px;box-shadow:0 2px 8px var(--shadow);opacity:0;transform:translateY(30px);transition:opacity .6s,transform .6s,background .4s,border-color .4s}
+  .craft-card.show{opacity:1;transform:translateY(0)}
+  .craft-card h3{font-size:22px;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .craft-card h3::before{content:"🛠";font-size:24px}
+  .craft-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  .tag{background:var(--tag-bg);color:var(--tag-color);padding:4px 12px;border-radius:20px;font-size:14px}
+  .craft-steps{padding-left:20px}
+  .craft-steps li{margin-bottom:8px;color:var(--ink2);font-size:16px}
+  .craft-tip{background:var(--guide-bg);border-left:4px solid var(--accent);padding:12px 16px;border-radius:8px;margin-top:16px;color:var(--ink2);font-size:15px;transition:background .4s}
+
+  /* ===== 家书 ===== */
+  .letters{display:grid;gap:20px}
+  .letter-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:24px;position:relative;box-shadow:0 2px 8px var(--shadow);opacity:0;transform:translateY(30px);transition:opacity .6s,transform .6s,background .4s,border-color .4s}
+  .letter-card.show{opacity:1;transform:translateY(0)}
+  .letter-card::before{content:"";position:absolute;top:0;left:20px;right:20px;height:4px;background:repeating-linear-gradient(90deg,var(--accent) 0 8px,transparent 8px 16px);border-radius:0 0 4px 4px}
+  .letter-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;color:var(--ink2);font-size:14px}
+  .letter-to{font-weight:bold;color:var(--ink)}
+  .letter-body{color:var(--ink);font-size:17px;line-height:1.9;text-indent:2em}
+  .letter-body p{margin-bottom:12px}
+  .letter-sign{text-align:right;color:var(--ink2);font-size:15px;margin-top:16px;font-style:italic}
+
+  /* ===== 便签墙 ===== */
+  .notes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .note{position:relative;padding:20px;border-radius:4px;box-shadow:0 4px 12px var(--shadow);transform:rotate(-1deg);opacity:0;transition:opacity .6s,transform .6s,box-shadow .4s}
+  .note.show{opacity:1}
+  .note.yellow{background:#fff9c4;transform:rotate(-2deg);color:#5a4a0a}
+  .note.green{background:#dcedc8;transform:rotate(1.5deg);color:#2e4a0a}
+  .note.pink{background:#f8bbd0;transform:rotate(-1deg);color:#4a0a2e}
+  .note::after{content:"";position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:40px;height:14px;background:var(--photo-tape);opacity:.6;border-radius:2px}
+  .note-title{font-weight:bold;font-size:18px;margin-bottom:8px}
+  .note-text{font-size:16px}
+
+  /* ===== 家谱 ===== */
+  .tree{display:flex;justify-content:center;padding:20px 0}
+  .tree-svg{width:100%;max-width:560px;height:auto}
+  .tree-node{fill:var(--card-bg);stroke:var(--accent);stroke-width:2;transition:fill .4s,stroke .4s}
+  .tree-text{fill:var(--ink);font-size:14px;text-anchor:middle;font-family:inherit;transition:fill .4s}
+  .tree-line{stroke:var(--line);stroke-width:2;transition:stroke .4s}
+
+  /* ===== 账本 ===== */
+  .ledger{background:var(--ledger-bg);border:2px solid var(--ledger-line);border-radius:12px;padding:24px;opacity:0;transform:translateY(30px);transition:opacity .6s,transform .6s,background .4s,border-color .4s}
+  .ledger.show{opacity:1;transform:translateY(0)}
+  .ledger-title{text-align:center;font-size:22px;margin-bottom:20px;color:var(--ink);font-weight:bold}
+  .ledger-table{width:100%;border-collapse:collapse;font-size:16px}
+  .ledger-table th{background:var(--tape);color:var(--ink);padding:12px;text-align:left;border-bottom:2px solid var(--accent);font-weight:bold;transition:background .4s}
+  .ledger-table td{padding:10px 12px;border-bottom:1px dashed var(--line);color:var(--ink2);transition:border-color .4s}
+  .ledger-table td:last-child{text-align:right;font-family:"Courier New",monospace}
+  .ledger-summary{margin-top:16px;padding:12px;background:var(--guide-bg);border-radius:8px;display:flex;justify-content:space-between;font-size:18px;font-weight:bold;color:var(--ink);transition:background .4s}
+
+  /* ===== 制作指南 ===== */
+  .guide{background:var(--guide-bg);border:2px solid var(--guide-border);border-radius:16px;padding:32px;opacity:0;transform:translateY(30px);transition:opacity .6s,transform .6s,background .4s,border-color .4s}
+  .guide.show{opacity:1;transform:translateY(0)}
+  .guide h2{font-size:24px;text-align:center;margin-bottom:24px;color:var(--ink);position:relative;padding-bottom:12px}
+  .guide h2::after{content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:60px;height:3px;background:var(--accent);border-radius:2px;transition:background .4s}
+  .guide-intro{color:var(--ink2);font-size:17px;margin-bottom:24px;text-align:center}
+  .guide-steps{padding-left:24px}
+  .guide-steps li{margin-bottom:16px;color:var(--ink);font-size:16px;line-height:1.8}
+  .guide-steps li strong{color:var(--accent);font-size:17px}
+  .prompt-box{background:var(--card-bg);border:1px dashed var(--accent);border-radius:12px;padding:20px;margin-top:24px;transition:background .4s,border-color .4s}
+  .prompt-box h4{color:var(--accent);margin-bottom:12px;font-size:18px}
+  .prompt-box pre{background:rgba(0,0,0,.03);padding:16px;border-radius:8px;font-size:14px;line-height:1.8;color:var(--ink2);overflow-x:auto;white-space:pre-wrap;word-break:break-all;font-family:"Courier New",monospace}
+  .cta-btn{display:block;width:100%;max-width:320px;margin:32px auto 0;padding:14px 24px;background:var(--accent);color:#fff;border:none;border-radius:30px;font-size:18px;font-family:inherit;cursor:pointer;text-align:center;text-decoration:none;box-shadow:0 4px 0 var(--btn-shadow);transition:transform .1s,background .4s}
+  .cta-btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--btn-shadow)}
+
+  /* ===== 页脚 ===== */
+  .footer{text-align:center;padding:32px 24px;color:var(--ink2);font-size:14px;border-top:1px dashed var(--line);transition:border-color .4s}
+  .footer a{color:var(--accent);text-decoration:none}
+
+  /* ===== 响应式 ===== */
+  @media(max-width:600px){
+    .photo-wall{grid-template-columns:repeat(2,1fr)}
+    .notes{grid-template-columns:1fr}
+    #cover h1{font-size:32px}
+    .cover-photo{width:180px;height:180px}
+    .sec-title{font-size:24px}
+    .sun{top:40px;right:40px;width:60px;height:60px}
+    .top-nav{padding:10px 16px}
+    .top-nav .brand{font-size:18px}
+    section{padding:32px 16px}
+    .tree-svg{max-width:100%}
+    .ledger-table{font-size:14px}
+    .ledger-table th,.ledger-table td{padding:8px}
+  }
+  @media print{
+    .top-nav,.menu-panel{display:none}
+    .app{box-shadow:none}
+    section{break-inside:avoid}
+  }
+</style>
+</head>
+<body data-theme="default">
+
+<!-- 顶部导航 -->
+<nav class="top-nav">
+  <div class="brand">🏠 家庭记忆册</div>
+  <div class="nav-actions">
+    <div class="theme-switcher">
+      <button class="theme-btn active" data-theme="default" title="暖牛皮纸" onclick="setTheme('default')"></button>
+      <button class="theme-btn" data-theme="red" title="喜庆红" onclick="setTheme('red')"></button>
+      <button class="theme-btn" data-theme="blue" title="清新蓝" onclick="setTheme('blue')"></button>
+    </div>
+    <button class="menu-btn" onclick="toggleMenu()" title="目录">☰</button>
+  </div>
+</nav>
+
+<!-- 菜单面板 -->
+<div class="menu-panel" id="menuPanel">
+  <h3>快速跳转</h3>
+  <a href="#cover" onclick="closeMenu()">🏠 封面</a>
+  <a href="#dao" onclick="closeMenu()">📜 走过的道</a>
+  <a href="#smile" onclick="closeMenu()">📸 存下的笑脸</a>
+  <a href="#craft" onclick="closeMenu()">🛠 老手艺</a>
+  <a href="#words" onclick="closeMenu()">💌 想说的话</a>
+  <a href="#note" onclick="closeMenu()">📝 记事本</a>
+  <a href="#tree" onclick="closeMenu()">🌳 咱家这棵大树</a>
+  <a href="#ledger" onclick="closeMenu()">📒 账本</a>
+  <a href="#guide" onclick="closeMenu()">📖 制作指南</a>
+</div>
+
+<div class="app">
+
+  <!-- 封面 -->
+  <section id="cover">
+    <div class="sun"></div>
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="cover-photo">
+      <div class="placeholder">👵 温馨家庭照</div>
+    </div>
+    <h1>蓝天的故事</h1>
+    <p class="sub">一位平凡老人的家庭记忆册</p>
+    <p class="tagline">"时光流转，温暖如初"</p>
+  </section>
+
+  <!-- 走过的道 -->
+  <section id="dao">
+    <h2 class="sec-title">走过的道</h2>
+    <p class="sec-sub">按年份的大事 · 一生脚印</p>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">1949年</div>
+        <div class="tl-card"><p>出生在一个小镇。街坊邻里热乎，谁家揭不开锅，大伙儿匀一口。穷日子也有暖。</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1968年</div>
+        <div class="tl-card"><p>嫁给老伴。俩人一台缝纫机，起家。他说「有手就能活」，这话记一辈子。</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1982年</div>
+        <div class="tl-card"><p>开始学一门手艺。踩着缝纫机赶活儿，一晚上能做三五个。手艺是饭碗，也是尊严。</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1995年</div>
+        <div class="tl-card"><p>供俩孩子上了学。再苦不能苦孩子，咬牙供出来。看着孩子有出息，比啥都强。</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2010年</div>
+        <div class="tl-card"><p>抱上了孙子。小家伙一笑，整天的累都散了。隔辈亲，真不假。</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2023年</div>
+        <div class="tl-card"><p>学会了用手机视频。隔着屏幕看孙子，技术进步了，念想没断。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 存下的笑脸 -->
+  <section id="smile">
+    <h2 class="sec-title">存下的笑脸</h2>
+    <p class="sec-sub">老照片儿 · 老影像 · 舍不得删</p>
+    <div class="photo-wall">
+      <div class="photo-item">
+        <div class="photo-polaroid">
+          <div class="photo-placeholder">👵<br>老人肖像</div>
+        </div>
+        <div class="photo-caption">七十岁那年拍的</div>
+      </div>
+      <div class="photo-item">
+        <div class="photo-polaroid">
+          <div class="photo-placeholder">🍽<br>家庭聚餐</div>
+        </div>
+        <div class="photo-caption">过年包饺子</div>
+      </div>
+      <div class="photo-item">
+        <div class="photo-polaroid">
+          <div class="photo-placeholder">🧵<br>手作工艺</div>
+        </div>
+        <div class="photo-caption">做了一半的布包</div>
+      </div>
+      <div class="photo-item">
+        <div class="photo-polaroid">
+          <div class="photo-placeholder">🍜<br>家常菜</div>
+        </div>
+        <div class="photo-caption">老伴爱吃的炸酱面</div>
+      </div>
+      <div class="photo-item">
+        <div class="photo-polaroid">
+          <div class="photo-placeholder">📻<br>老物件</div>
+        </div>
+        <div class="photo-caption">用了三十年的缝纫机</div>
+      </div>
+      <div class="photo-item">
+        <div class="photo-polaroid">
+          <div class="photo-placeholder">💑<br>金婚纪念</div>
+        </div>
+        <div class="photo-caption">金婚那天拍的</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 老手艺 -->
+  <section id="craft">
+    <h2 class="sec-title">老手艺</h2>
+    <p class="sec-sub">绝活 · 拿手菜 · 一辈子的本事</p>
+    <div class="craft-grid">
+      <div class="craft-card">
+        <h3>手工布包</h3>
+        <div class="craft-meta">
+          <span class="tag">🧵 缝制</span>
+          <span class="tag">⏱ 约2小时</span>
+          <span class="tag">🎯 实用</span>
+        </div>
+        <ol class="craft-steps">
+          <li>选一块结实的棉布，裁成40×30cm的大小</li>
+          <li>正面对正面缝三边，留一个口子翻面</li>
+          <li>翻过来后把口子用藏针法缝上</li>
+          <li>缝两条提手，宽一点才不勒手</li>
+          <li>最后检查一遍针脚，结实了才能装东西</li>
+        </ol>
+        <div class="craft-tip">💡 小贴士：边角料别扔，拼起来能做个小的钥匙包。这叫"物尽其用"。</div>
+      </div>
+      <div class="craft-card">
+        <h3>炸酱面</h3>
+        <div class="craft-meta">
+          <span class="tag">🍜 面食</span>
+          <span class="tag">⏱ 约40分钟</span>
+          <span class="tag">👨‍👩‍👧 家传</span>
+        </div>
+        <ol class="craft-steps">
+          <li>五花肉切丁，肥瘦分开</li>
+          <li>先煸肥肉出油，再加瘦肉炒到变色</li>
+          <li>加三勺黄豆酱、一勺甜面酱，小火慢熬</li>
+          <li>熬到油和酱分离，撒一把葱花，关火</li>
+          <li>面条煮熟过凉水，黄瓜切丝，拌上炸酱</li>
+        </ol>
+        <div class="craft-tip">💡 小贴士：酱别咸了，宁可淡一点，吃的时候再加。老伴血压高，少盐是福。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 想说的话 -->
+  <section id="words">
+    <h2 class="sec-title">想说的话</h2>
+    <p class="sec-sub">经验 · 嘱咐 · 藏在心里的话</p>
+    <div class="letters">
+      <div class="letter-card">
+        <div class="letter-header">
+          <span class="letter-to">📮 给儿女们的话</span>
+          <span>2026年春</span>
+        </div>
+        <div class="letter-body">
+          <p>咱们这一辈子，没给你们留啥大产业，就留了个"家和"。</p>
+          <p>你爹常说，人这一辈子，钱挣不完，但日子得过完。啥叫好日子？不是住多大房、开多好的车，是晚上一家人能坐一块吃顿饭。</p>
+          <p>我走了以后，你们兄妹别生分。有事商量，没事常走动。家和万事兴，这话到啥时候都管用。</p>
+        </div>
+        <div class="letter-sign">—— 你们的娘</div>
+      </div>
+      <div class="letter-card">
+        <div class="letter-header">
+          <span class="letter-to">📮 给孙子的话</span>
+          <span>2026年春</span>
+        </div>
+        <div class="letter-body">
+          <p>奶奶没上过几天学，不认识几个字。但奶奶知道，做人要实诚。</p>
+          <p>你将来长大了，不管干啥，别坑人。坑人一时，坑自己一世。咱们穷过，但穷得干净。</p>
+          <p>记住奶奶这句话：饭要一口一口吃，路要一步一步走。急不得。</p>
+        </div>
+        <div class="letter-sign">—— 奶奶</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 记事本 -->
+  <section id="note">
+    <h2 class="sec-title">记事本</h2>
+    <p class="sec-sub">备忘 · 提醒 ·  daily notes</p>
+    <div class="notes">
+      <div class="note yellow">
+        <div class="note-title">每周三</div>
+        <div class="note-text">去公园遛弯儿，和老姐妹碰头。记得带保温杯。</div>
+      </div>
+      <div class="note green">
+        <div class="note-title">每天</div>
+        <div class="note-text">记得喝水，一天至少六杯。老伴提醒我了三次了。</div>
+      </div>
+      <div class="note pink">
+        <div class="note-title">想起来了</div>
+        <div class="note-text">给闺女打个电话，问问孩子期末考得咋样。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 咱家这棵大树 -->
+  <section id="tree">
+    <h2 class="sec-title">咱家这棵大树</h2>
+    <p class="sec-sub">根儿和枝叶 · 一家人</p>
+    <div class="tree">
+      <svg class="tree-svg" viewBox="0 0 560 340" xmlns="http://www.w3.org/2000/svg">
+        <!-- 树干和根 -->
+        <line x1="280" y1="80" x2="280" y2="140" class="tree-line"/>
+        <line x1="280" y1="140" x2="200" y2="220" class="tree-line"/>
+        <line x1="280" y1="140" x2="360" y2="220" class="tree-line"/>
+        <line x1="200" y1="220" x2="120" y2="300" class="tree-line"/>
+        <line x1="200" y1="220" x2="280" y2="300" class="tree-line"/>
+        <line x1="360" y1="220" x2="360" y2="300" class="tree-line"/>
+        <line x1="360" y1="220" x2="440" y2="300" class="tree-line"/>
+        
+        <!-- 节点 -->
+        <rect x="240" y="50" width="80" height="36" rx="18" class="tree-node"/>
+        <text x="280" y="74" class="tree-text">本人</text>
+        
+        <rect x="160" y="50" width="80" height="36" rx="18" class="tree-node"/>
+        <text x="200" y="74" class="tree-text">老伴</text>
+        
+        <rect x="160" y="202" width="80" height="36" rx="18" class="tree-node"/>
+        <text x="200" y="226" class="tree-text">儿子</text>
+        
+        <rect x="320" y="202" width="80" height="36" rx="18" class="tree-node"/>
+        <text x="360" y="226" class="tree-text">女儿</text>
+        
+        <rect x="80" y="282" width="80" height="36" rx="18" class="tree-node"/>
+        <text x="120" y="306" class="tree-text">孙子</text>
+        
+        <rect x="240" y="282" width="80" height="36" rx="18" class="tree-node"/>
+        <text x="280" y="306" class="tree-text">孙女</text>
+        
+        <rect x="320" y="282" width="80" height="36" rx="18" class="tree-node"/>
+        <text x="360" y="306" class="tree-text">外孙</text>
+        
+        <rect x="400" y="282" width="80" height="36" rx="18" class="tree-node"/>
+        <text x="440" y="306" class="tree-text">外孙女</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- 账本 -->
+  <section id="ledger">
+    <div class="ledger">
+      <div class="ledger-title">📒 本月收支账</div>
+      <table class="ledger-table">
+        <thead>
+          <tr><th>日期</th><th>项目</th><th>收入</th><th>支出</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>3月1日</td><td>退休金</td><td>+3200</td><td>—</td></tr>
+          <tr><td>3月3日</td><td>买菜</td><td>—</td><td>-156</td></tr>
+          <tr><td>3月5日</td><td>水电费</td><td>—</td><td>-128</td></tr>
+          <tr><td>3月8日</td><td>给孙子红包</td><td>—</td><td>-200</td></tr>
+          <tr><td>3月10日</td><td>手工布包卖出</td><td>+80</td><td>—</td></tr>
+          <tr><td>3月15日</td><td>买药</td><td>—</td><td>-89</td></tr>
+          <tr><td>3月18日</td><td>老姐妹聚餐</td><td>—</td><td>-120</td></tr>
+          <tr><td>3月20日</td><td>话费</td><td>—</td><td>-58</td></tr>
+        </tbody>
+      </table>
+      <div class="ledger-summary">
+        <span>本月结余</span>
+        <span>¥2,549</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 制作指南 -->
+  <section id="guide">
+    <div class="guide">
+      <h2>📖 制作指南</h2>
+      <p class="guide-intro">这是一本"家庭记忆册"模板示范。你也可以在秒哒平台上，照着做一本属于自己的。</p>
+      
+      <ol class="guide-steps">
+        <li><strong>打开秒哒平台</strong> → 新建一个网页应用</li>
+        <li><strong>复制下面这段提示词</strong> → 发给AI助手，让它帮你生成基础框架</li>
+        <li><strong>替换内容</strong> → 把示例里的文字、照片换成你自己的</li>
+        <li><strong>调整配色</strong> → 选择你喜欢的主题色，暖色/红色/蓝色都行</li>
+        <li><strong>发布</strong> → 生成链接，发给家人看，或者打印出来装订成册</li>
+      </ol>
+      
+      <div class="prompt-box">
+        <h4>💡 可复制提示词思路</h4>
+        <pre>帮我做一本"家庭记忆册"网页，包含以下板块：
+1. 封面（姓名+一句温暖的话）
+2. 时间轴（按年份记录人生大事）
+3. 照片墙（6-8张家庭老照片+说明）
+4. 老手艺（2-3项拿手绝活，写步骤）
+5. 家书（2-3封给家人的信/嘱咐）
+6. 记事本（3-5张彩色便签，日常提醒）
+7. 家谱图（简单关系树）
+8. 账本（本月收支示例）
+
+风格要求：
+- 复古手账风，暖色调
+- 手机端友好，字体够大
+- 短句为主，老人看得懂
+- 单文件HTML，无外部依赖</pre>
+      </div>
+      
+      <a href="https://appmiaoda.com" target="_blank" class="cta-btn">👉 去秒哒平台试试</a>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <div class="footer">
+    <p>「家庭记忆册」模板示范 · 基于《蓝天的故事》改造</p>
+    <p>制作：林舟（白沟箱包产业AI增效顾问 + 银发数字生活架构师）</p>
+    <p><a href="https://github.com/Linzhoudream/linzhou-nav">GitHub：linzhou-nav</a></p>
+    <p style="margin-top:8px;font-size:12px;opacity:.6">本模板可自由使用，请保留来源</p>
+  </div>
+
+</div>
+
+<script>
+  // 主题切换
+  function setTheme(theme){
+    document.body.setAttribute('data-theme', theme);
+    document.querySelectorAll('.theme-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.theme === theme);
+    });
+    localStorage.setItem('family-album-theme', theme);
+  }
+  
+  // 恢复上次主题
+  const savedTheme = localStorage.getItem('family-album-theme') || 'default';
+  setTheme(savedTheme);
+  
+  // 菜单开关
+  function toggleMenu(){
+    document.getElementById('menuPanel').classList.toggle('open');
+  }
+  function closeMenu(){
+    document.getElementById('menuPanel').classList.remove('open');
+  }
+  
+  // 点击外部关闭菜单
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('.menu-panel') && !e.target.closest('.menu-btn')){
+      closeMenu();
+    }
+  });
+  
+  // 滚动淡入动效
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('show');
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+  
+  document.querySelectorAll('.tl-item, .photo-item, .craft-card, .letter-card, .note, .ledger, .guide').forEach(el => {
+    observer.observe(el);
+  });
+  
+  // 页面加载时封面淡入
+  document.addEventListener('DOMContentLoaded', function(){
+    document.getElementById('cover').style.opacity = '0';
+    document.getElementById('cover').style.transform = 'translateY(20px)';
+    document.getElementById('cover').style.transition = 'opacity .8s, transform .8s';
+    setTimeout(() => {
+      document.getElementById('cover').style.opacity = '1';
+      document.getElementById('cover').style.transform = 'translateY(0)';
+    }, 100);
+  });
+</script>
+
+</body>
+</html>
