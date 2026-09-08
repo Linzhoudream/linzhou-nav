@@ -1,0 +1,54 @@
+# 林舟自定义脱敏规则（配合 codebuddy.md §12 与 desensitize_gate.sh）
+# 定位：平台级 CI 强制拦截。覆盖林舟特有的"真实高风险"模式。
+# 与本地脚本互补：脚本是 AI 自觉层，本文件是 GitHub 服务端强制层（别的 AI 忘了也拦得住）。
+title = "Linzhou 脱敏规则"
+
+[extend]
+# 继承 gitleaks 内置规则（AWS / GitHub token / 私钥 / JWT 等已知密钥格式）
+useDefault = true
+
+# 排除门禁配置自身（避免规则里的关键词自匹配）与 CI 定义目录
+paths = [
+  '''\.gitleaks\.toml''',
+  '''\.github/''',
+]
+
+# 内部自动化任务号（箱包流水线等），禁止公开
+[[rules]]
+id = "linzhou-internal-task-id"
+description = "内部自动化任务号，禁止公开"
+regex = '''\b(5017165|5422691|5551341|5546830|5783909|6141787)\b'''
+keywords = ["5017165", "5422691", "5783909", "6141787"]
+entropy = 0
+
+# IMA 知识库 note_id，禁止公开
+[[rules]]
+id = "linzhou-ima-note-id"
+description = "IMA 知识库 note_id，禁止公开"
+regex = '''\b7495[0-9]{12}\b'''
+keywords = ["7495"]
+entropy = 0
+
+# 百度网盘提取码 / 分享链接（2026-09-08 真实踩雷项）
+[[rules]]
+id = "linzhou-baidu-pan-extract"
+description = "百度网盘提取码或分享链接"
+regex = '''(提取码|pwd=)\s*[A-Za-z0-9]{3,8}'''
+keywords = ["提取码", "pwd="]
+entropy = 0
+
+# 真实客户 / 品牌名（需泛化后才可公开）
+[[rules]]
+id = "linzhou-real-client-name"
+description = "真实客户/品牌名（熹巷罐罐酸奶·企鹅大学·家具城），需泛化后公开"
+regex = '''(熹巷罐罐酸奶|企鹅大学|家具城)'''
+keywords = ["熹巷", "企鹅大学", "家具城"]
+entropy = 0
+
+# 密钥 / 凭证类（补充内置规则未覆盖的字段名）
+[[rules]]
+id = "linzhou-credential-fields"
+description = "client_id / api_key / OpenClaw AK 等凭证字段"
+regex = '''(client_id|client_secret|api_key|apikey|X-Openclaw-AK|DESIGNKIT_OPENCLAW_AK)\s*[=:]\s*\S+'''
+keywords = ["client_id", "api_key", "OPENCLAW_AK"]
+entropy = 0
